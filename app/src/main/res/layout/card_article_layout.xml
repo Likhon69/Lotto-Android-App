@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="180dp"
+    android:layout_height="250dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="10dp"
+    app:cardCornerRadius="10dp">
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:orientation="vertical">
+      <RelativeLayout
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content">
+
+          <ImageView
+              android:id="@+id/article_image"
+              android:layout_width="match_parent"
+              android:adjustViewBounds="true"
+              android:scaleType="centerCrop"
+              android:layout_height="190dp"
+              android:src="@drawable/men" />
+      </RelativeLayout>
+
+
+          <TextView
+              android:id="@+id/article_txt_id"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginLeft="5dp"
+              android:layout_centerInParent="true"
+              android:text="Men's"
+              android:textFontWeight="@integer/config_navAnimTime"
+              android:textColor="@color/colorPrimary"
+              android:textSize="19dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/currency"
+                android:layout_width="wrap_content"
+                android:adjustViewBounds="true"
+                android:layout_margin="5dp"
+                android:scaleType="centerCrop"
+                android:layout_height="wrap_content"
+                android:src="@drawable/taka" />
+        </RelativeLayout>
+
+
+            <TextView
+                android:id="@+id/article_price_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="3dp"
+                android:layout_centerInParent="true"
+                android:text="3000"
+                android:textFontWeight="@integer/config_navAnimTime"
+                android:textColor="@color/colorPrimary"
+                android:textSize="19dp" />
+
+    </LinearLayout>
+  </LinearLayout>
+
+</androidx.cardview.widget.CardView>

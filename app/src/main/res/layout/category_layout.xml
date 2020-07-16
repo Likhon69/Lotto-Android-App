@@ -81,6 +81,7 @@ tools:context=".HomeFragment">
     <androidx.cardview.widget.CardView
         android:layout_width="95dp"
         android:layout_height="110dp"
+        android:id="@+id/men_card"
         card_view:cardPreventCornerOverlap="false"
         android:layout_margin="3dp"
         android:layout_weight="4"
@@ -277,6 +278,7 @@ tools:context=".HomeFragment">
     <include
         layout="@layout/trending_category_layout"/>
 
-
+    <include
+        layout="@layout/home_all_aricle_layout"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

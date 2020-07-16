@@ -10,7 +10,7 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="420dp"
+        android:layout_marginTop="440dp"
 
         android:layout_marginBottom="380dp"
         android:layout_marginRight="290dp"
@@ -66,7 +66,7 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="575dp"
+        android:layout_marginTop="595dp"
 
         android:layout_marginBottom="380dp"
         android:orientation="horizontal"

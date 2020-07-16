@@ -4,20 +4,33 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.FrameLayout;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.example.lottoecommrceapp.article.ArticleDetails;
+import com.example.lottoecommrceapp.article.ArticleDetailsAdapter;
 import com.example.lottoecommrceapp.slider.SliderAdapter;
 import com.example.lottoecommrceapp.slider.SliderItem;
 import com.google.android.material.navigation.NavigationView;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType;
 import com.smarteist.autoimageslider.IndicatorView.draw.controller.DrawController;
 import com.smarteist.autoimageslider.SliderAnimations;
@@ -27,6 +40,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
+    private static final String URL = "https://localhost:44375/api/ArticleGet/GetAllArticleDetails";
+    private static final String URL2 = "https://localhost:44375/Likhon";
+    ArticleDetails[] articleDetails;
+    private RequestQueue mQueue;
     private FrameLayout frameLayout;
     private SliderView sliderView;
     @Override
@@ -66,26 +83,63 @@ public class HomeActivity extends AppCompatActivity {
                 Log.i("GGG", "onIndicatorClicked: " + sliderView.getCurrentPagePosition());
             }
         });
-
-    }
-    public  boolean onCreateOptionsMenu(Menu menu){
-        getMenuInflater().inflate(R.menu.home,menu);
-        MenuItem item = menu.findItem(R.id.search_id);
-        SearchView searchView = (SearchView) item.getActionView();
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+        CardView cardView = findViewById(R.id.men_card);
+        cardView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                return false;
+            public void onClick(View v) {
+                Intent intent = new Intent(HomeActivity.this,MenCategoryActivity.class);
+                startActivity(intent);
             }
         });
+        //article details code
+        final RecyclerView articleAllList = findViewById(R.id.article_List);
+        GridLayoutManager layoutManager = new GridLayoutManager(this,2);
+        //layoutManager.setOrientation(RecyclerView.HORIZONTAL);
+        articleAllList.setLayoutManager(layoutManager);
+        StringRequest request = new StringRequest(URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                GsonBuilder gsonbuilder = new GsonBuilder();
+                Gson gson = gsonbuilder.create();
+
+                articleDetails = gson.fromJson(response,ArticleDetails[].class);
+
+
+                articleAllList.setAdapter(new ArticleDetailsAdapter(HomeActivity.this,articleDetails));
+
+
+            }
+
+
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+        RequestQueue Queue = Volley.newRequestQueue(this);
+        Queue.add(request);
+    }
+
+    public  boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.home,menu);
+    MenuItem item = menu.findItem(R.id.search_id);
+    SearchView searchView = (SearchView) item.getActionView();
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+        @Override
+        public boolean onQueryTextSubmit(String query) {
+            return false;
+        }
+
+        @Override
+        public boolean onQueryTextChange(String newText) {
+            return false;
+        }
+    });
 
         return  true;
-    }
+}
   /*  private  void setFragment(Fragment fragment){
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(frameLayout.getId(),fragment);
