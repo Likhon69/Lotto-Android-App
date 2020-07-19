@@ -278,6 +278,7 @@ tools:context=".HomeFragment">
     <include
         layout="@layout/trending_category_layout"/>
 
+
     <include
         layout="@layout/home_all_aricle_layout"/>
 

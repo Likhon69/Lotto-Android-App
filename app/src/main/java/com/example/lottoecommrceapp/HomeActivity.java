@@ -18,7 +18,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
-
+import com.android.volley.NetworkResponse;
+import com.android.volley.ParseError;
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -40,9 +42,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
-    private static final String URL = "https://localhost:44375/api/ArticleGet/GetAllArticleDetails";
-    private static final String URL2 = "https://localhost:44375/Likhon";
-    ArticleDetails[] articleDetails;
+    private static final String TAG = MainActivity.class.getSimpleName();
+    private static final String URL = "http://192.168.5.27/api/ArticleGet/GetAllArticleDetails";
+    private static final String URL2 = "http://192.168.5.27/Likhon";
+    private ArticleDetails[] articleDetails;
+    private ArticleDetails[] articleDetails2;
     private RequestQueue mQueue;
     private FrameLayout frameLayout;
     private SliderView sliderView;
@@ -83,27 +87,28 @@ public class HomeActivity extends AppCompatActivity {
                 Log.i("GGG", "onIndicatorClicked: " + sliderView.getCurrentPagePosition());
             }
         });
-        CardView cardView = findViewById(R.id.men_card);
+      /*  CardView cardView = findViewById(R.id.men_card);
         cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(HomeActivity.this,MenCategoryActivity.class);
                 startActivity(intent);
             }
-        });
+        });*/
         //article details code
         final RecyclerView articleAllList = findViewById(R.id.article_List);
         GridLayoutManager layoutManager = new GridLayoutManager(this,2);
         //layoutManager.setOrientation(RecyclerView.HORIZONTAL);
         articleAllList.setLayoutManager(layoutManager);
-        StringRequest request = new StringRequest(URL, new Response.Listener<String>() {
+        StringRequest request = new StringRequest(Request.Method.GET,URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-
+                Log.e(TAG, "Successfully signed in response : " + response.toString());
                 GsonBuilder gsonbuilder = new GsonBuilder();
                 Gson gson = gsonbuilder.create();
 
                 articleDetails = gson.fromJson(response,ArticleDetails[].class);
+                //articleDetails2 = articleDetails.toString();
 
 
                 articleAllList.setAdapter(new ArticleDetailsAdapter(HomeActivity.this,articleDetails));

@@ -5,6 +5,12 @@ import com.google.gson.annotations.SerializedName;
 
 public class ArticleDetails {
 
+    @SerializedName("articleTitle")
+    @Expose
+    private  String articleTitle;
+
+
+
     @SerializedName("articleSubtitle")
     @Expose
     private String articleSubtitle;
@@ -14,6 +20,14 @@ public class ArticleDetails {
     @SerializedName("standardPrice")
     @Expose
     private Integer standardPrice;
+
+    public String getArticleTitle() {
+        return articleTitle;
+    }
+
+    public void setArticleTitle(String articleTitle) {
+        this.articleTitle = articleTitle;
+    }
 
     public String getArticleSubtitle() {
         return articleSubtitle;

@@ -14,7 +14,7 @@ import com.bumptech.glide.Glide;
 import com.example.lottoecommrceapp.R;
 
 public class ArticleDetailsAdapter extends RecyclerView.Adapter<ArticleDetailsAdapter.ArticleDetailsHolder> {
-    private static final String ImgUrl = "https://localhost:44375/Likhon";
+    private static final String ImgUrl = "http://192.168.5.27/Likhon/";
     @NonNull
     ArticleDetails[] articleDetails;
     Context context;
@@ -38,6 +38,7 @@ public class ArticleDetailsAdapter extends RecyclerView.Adapter<ArticleDetailsAd
     public void onBindViewHolder(@NonNull ArticleDetailsAdapter.ArticleDetailsHolder holder, int position) {
         ArticleDetails article = articleDetails[position];
        holder.articleText.setText(article.getArticleSubtitle());
+       holder.articlePrice.setText(Integer.toString(article.getStandardPrice()));
         Glide.with(holder.cardImage.getContext()).load(ImgUrl+article.getArticleMasterImage())
                 .fitCenter()
                 .into(holder.cardImage);
