@@ -10,9 +10,9 @@ tools:context=".HomeFragment">
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="105dp"
+        android:layout_marginTop="0dp"
 
-        android:layout_marginBottom="380dp"
+        android:layout_marginBottom="500dp"
         android:layout_marginRight="290dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -69,7 +69,7 @@ tools:context=".HomeFragment">
     android:layout_height="wrap_content"
     android:layout_marginTop="260dp"
 
-    android:layout_marginBottom="380dp"
+    android:layout_marginBottom="600dp"
     android:orientation="horizontal"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
@@ -87,7 +87,7 @@ tools:context=".HomeFragment">
         android:layout_weight="4"
         app:cardBackgroundColor="#FFFFFF"
         app:cardCornerRadius="10dp"
-        tools:ignore="MissingConstraints">
+        >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -275,11 +275,272 @@ tools:context=".HomeFragment">
 
 </LinearLayout>
 
-    <include
-        layout="@layout/trending_category_layout"/>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="440dp"
+
+        android:layout_marginBottom="625dp"
+        android:layout_marginRight="290dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            card_view:cardPreventCornerOverlap="false"
+            android:layout_margin="3dp"
+            android:layout_weight="4"
+            app:cardBackgroundColor="@color/colorPrimary"
+            app:cardCornerRadius="10dp"
+            tools:ignore="MissingConstraints">
 
 
-    <include
-        layout="@layout/home_all_aricle_layout"/>
+
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginBottom="8dp"
+                    android:text="Trendings"
+                    android:textSize="20dp"
+                    android:textStyle="bold"
+                    android:textFontWeight="@integer/config_navAnimTime"
+                    android:textColor="#FFFFFF"
+                    />
+            </RelativeLayout>
+
+
+        </androidx.cardview.widget.CardView>
+
+
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="595dp"
+
+        android:layout_marginBottom="620dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="95dp"
+            android:layout_height="110dp"
+            card_view:cardPreventCornerOverlap="false"
+            android:layout_margin="3dp"
+            android:layout_weight="4"
+            app:cardBackgroundColor="#FFFFFF"
+            app:cardCornerRadius="10dp"
+            tools:ignore="MissingConstraints">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/mens_category_img_id1"
+                        android:layout_width="match_parent"
+                        android:adjustViewBounds="true"
+                        android:scaleType="centerCrop"
+                        android:layout_height="90dp"
+                        android:src="@drawable/men" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    >
+
+                    <TextView
+                        android:id="@+id/mens_category_txt_id1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="New Arrivals"
+                        android:textFontWeight="@integer/config_navAnimTime"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="13dp" />
+                </RelativeLayout>
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="95dp"
+            android:layout_height="110dp"
+
+            android:layout_margin="3dp"
+            android:layout_weight="4"
+            app:cardBackgroundColor="#FFFFFF"
+            app:cardCornerRadius="10dp"
+            tools:ignore="MissingConstraints">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/womens_category_img_id2"
+                        android:layout_width="match_parent"
+                        android:layout_height="90dp"
+                        android:adjustViewBounds="true"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/men"/>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+
+                    >
+
+                    <TextView
+                        android:id="@+id/womens_category_txt_id2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="Women's"
+                        android:textFontWeight="@integer/config_navAnimTime"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="13dp" />
+                </RelativeLayout>
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="95dp"
+            android:layout_height="110dp"
+
+            android:layout_margin="3dp"
+            android:layout_weight="4"
+            app:cardBackgroundColor="#FFFFFF"
+            app:cardCornerRadius="10dp"
+            tools:ignore="MissingConstraints">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/kids_category_img_id3"
+                        android:layout_width="match_parent"
+                        android:adjustViewBounds="true"
+                        android:scaleType="centerCrop"
+                        android:layout_height="90dp"
+                        android:src="@drawable/men" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+
+                    >
+
+                    <TextView
+                        android:id="@+id/kids_category_txt_id3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="Kid's"
+                        android:textFontWeight="@integer/config_navAnimTime"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="13dp" />
+                </RelativeLayout>
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="95dp"
+            android:layout_height="110dp"
+
+            android:layout_margin="3dp"
+            android:layout_weight="4"
+            app:cardBackgroundColor="#FFFFFF"
+            app:cardCornerRadius="10dp"
+            tools:ignore="MissingConstraints">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/accessories_category_img_id4"
+                        android:layout_width="match_parent"
+                        android:adjustViewBounds="true"
+                        android:scaleType="centerCrop"
+                        android:layout_height="90dp"
+                        android:src="@drawable/men" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+
+                    >
+
+                    <TextView
+                        android:id="@+id/accessories_category_txt_id4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="Accessories"
+                        android:textFontWeight="@integer/config_navAnimTime"
+                        android:textColor="@color/colorPrimary"
+
+                        android:textSize="13dp" />
+                </RelativeLayout>
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+
+    </LinearLayout>
+
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -13,16 +13,32 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.lottoecommrceapp.R;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ArticleDetailsAdapter extends RecyclerView.Adapter<ArticleDetailsAdapter.ArticleDetailsHolder> {
+
+    public static String ARTICLE_NAME = "articleTitle";
+    public static  String ARTICLE_PRICE = "standardPrice";
+    public static  String ARTICLE_IMAGE_NAME = "articleMasterImage";
+    public static  String ARTICLE_ID = "articleId";
     private static final String ImgUrl = "http://192.168.5.27/Likhon/";
     @NonNull
-    ArticleDetails[] articleDetails;
+    List<ArticleDetails> lista = new ArrayList<>();
     Context context;
+    private onItemClickListener mListner;
+
+    public interface onItemClickListener{
+        void onItemClick(int position);
+    }
+    public void setOnItemClickListner(onItemClickListener listner){
+        this.mListner = listner;
+    }
 
 
 
-    public ArticleDetailsAdapter(@NonNull Context context,ArticleDetails[] articleDetails) {
-        this.articleDetails = articleDetails;
+    public ArticleDetailsAdapter(@NonNull Context context,  List<ArticleDetails> lista) {
+        this.lista = lista;
         this.context = context;
     }
 
@@ -36,17 +52,17 @@ public class ArticleDetailsAdapter extends RecyclerView.Adapter<ArticleDetailsAd
 
     @Override
     public void onBindViewHolder(@NonNull ArticleDetailsAdapter.ArticleDetailsHolder holder, int position) {
-        ArticleDetails article = articleDetails[position];
-       holder.articleText.setText(article.getArticleSubtitle());
-       holder.articlePrice.setText(Integer.toString(article.getStandardPrice()));
-        Glide.with(holder.cardImage.getContext()).load(ImgUrl+article.getArticleMasterImage())
+
+       holder.articleText.setText(lista.get(position).getArticleSubtitle());
+       holder.articlePrice.setText(Integer.toString(lista.get(position).getStandardPrice()));
+        Glide.with(holder.cardImage.getContext()).load(ImgUrl+lista.get(position).getArticleMasterImage())
                 .fitCenter()
                 .into(holder.cardImage);
     }
 
     @Override
     public int getItemCount() {
-        return articleDetails.length;
+        return lista.size();
     }
 
     public class ArticleDetailsHolder extends RecyclerView.ViewHolder {
@@ -58,6 +74,18 @@ public class ArticleDetailsAdapter extends RecyclerView.Adapter<ArticleDetailsAd
             cardImage = itemView.findViewById(R.id.article_image);
             articleText = itemView.findViewById(R.id.article_txt_id);
             articlePrice = itemView.findViewById(R.id.article_price_txt);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(mListner!=null){
+                        int position = getAdapterPosition();
+                        if(position!=RecyclerView.NO_POSITION){
+                            mListner.onItemClick(position);
+                        }
+                    }
+                }
+            });
         }
     }
 }

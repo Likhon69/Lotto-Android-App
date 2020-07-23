@@ -10,7 +10,8 @@
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        android:theme="@style/AppTheme.AppBarOverlay"
+        tools:ignore="MissingConstraints">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
@@ -30,9 +31,228 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <include
-        layout="@layout/contain_main"
-        />
+    <com.smarteist.autoimageslider.SliderView
+        android:id="@+id/imageSlider"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+
+        app:sliderAnimationDuration="600"
+        app:sliderAutoCycleDirection="back_and_forth"
+        app:sliderIndicatorAnimationDuration="600"
+        app:sliderIndicatorEnabled="true"
+        app:sliderIndicatorGravity="center_horizontal|bottom"
+        app:sliderIndicatorMargin="15dp"
+        app:sliderIndicatorOrientation="horizontal"
+        app:sliderIndicatorPadding="3dp"
+        app:sliderIndicatorRadius="2dp"
+        app:sliderIndicatorSelectedColor="#5A5A5A"
+        app:sliderIndicatorUnselectedColor="#FFF"
+        app:sliderScrollTimeInSec="1"
+        tools:ignore="MissingConstraints" />
+   <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+
+       android:orientation="horizontal">
+      <androidx.cardview.widget.CardView
+          android:layout_width="95dp"
+          android:layout_height="110dp"
+          android:id="@+id/men_card"
+          android:layout_margin="3dp"
+          android:layout_weight="4"
+          app:cardBackgroundColor="#FFFFFF"
+          app:cardCornerRadius="5dp">
+          <LinearLayout
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+              <RelativeLayout
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content">
+
+                  <ImageView
+                      android:id="@+id/mens_category_img_id"
+                      android:layout_width="match_parent"
+                      android:adjustViewBounds="true"
+                      android:scaleType="centerCrop"
+                      android:layout_height="90dp"
+                      android:src="@drawable/men" />
+              </RelativeLayout>
+
+              <RelativeLayout
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+
+                  >
+
+                  <TextView
+                      android:id="@+id/mens_category_txt_id"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:layout_centerInParent="true"
+                      android:text="Men's"
+                      android:textFontWeight="@integer/config_navAnimTime"
+                      android:textColor="@color/colorPrimary"
+                      android:textSize="13dp" />
+              </RelativeLayout>
+          </LinearLayout>
+      </androidx.cardview.widget.CardView>
+       <androidx.cardview.widget.CardView
+           android:layout_width="95dp"
+           android:layout_height="110dp"
+
+           android:layout_margin="3dp"
+           android:layout_weight="4"
+           app:cardBackgroundColor="#FFFFFF"
+           app:cardCornerRadius="5dp"
+           tools:ignore="MissingConstraints">
+
+           <LinearLayout
+               android:layout_width="match_parent"
+               android:layout_height="match_parent"
+               android:orientation="vertical">
+
+               <RelativeLayout
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content">
+
+                   <ImageView
+                       android:id="@+id/womens_category_img_id"
+                       android:layout_width="match_parent"
+                       android:layout_height="90dp"
+                       android:adjustViewBounds="true"
+                       android:scaleType="centerCrop"
+                       android:src="@drawable/women"/>
+               </RelativeLayout>
+
+               <RelativeLayout
+                   android:layout_width="match_parent"
+                   android:layout_height="match_parent"
+
+                   >
+
+                   <TextView
+                       android:id="@+id/womens_category_txt_id"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_centerInParent="true"
+                       android:text="Women's"
+                       android:textFontWeight="@integer/config_navAnimTime"
+                       android:textColor="@color/colorPrimary"
+                       android:textSize="13dp" />
+               </RelativeLayout>
+           </LinearLayout>
+
+       </androidx.cardview.widget.CardView>
+
+       <androidx.cardview.widget.CardView
+           android:layout_width="95dp"
+           android:layout_height="110dp"
+
+           android:layout_margin="3dp"
+           android:layout_weight="4"
+           app:cardBackgroundColor="#FFFFFF"
+           app:cardCornerRadius="5dp"
+           tools:ignore="MissingConstraints">
+
+           <LinearLayout
+               android:layout_width="match_parent"
+               android:layout_height="match_parent"
+               android:orientation="vertical">
+
+               <RelativeLayout
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content">
+
+                   <ImageView
+                       android:id="@+id/kids_category_img_id"
+                       android:layout_width="match_parent"
+                       android:adjustViewBounds="true"
+                       android:scaleType="centerCrop"
+                       android:layout_height="90dp"
+                       android:src="@drawable/kid" />
+               </RelativeLayout>
+
+               <RelativeLayout
+                   android:layout_width="match_parent"
+                   android:layout_height="match_parent"
+
+                   >
+
+                   <TextView
+                       android:id="@+id/kids_category_txt_id"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_centerInParent="true"
+                       android:text="Kid's"
+                       android:textFontWeight="@integer/config_navAnimTime"
+                       android:textColor="@color/colorPrimary"
+                       android:textSize="13dp" />
+               </RelativeLayout>
+           </LinearLayout>
+
+       </androidx.cardview.widget.CardView>
+
+       <androidx.cardview.widget.CardView
+           android:layout_width="95dp"
+           android:layout_height="110dp"
+
+           android:layout_margin="3dp"
+           android:layout_weight="4"
+           app:cardBackgroundColor="#FFFFFF"
+           app:cardCornerRadius="5dp"
+           tools:ignore="MissingConstraints">
+
+           <LinearLayout
+               android:layout_width="match_parent"
+               android:layout_height="match_parent"
+               android:orientation="vertical">
+
+               <RelativeLayout
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content">
+
+                   <ImageView
+                       android:id="@+id/accessories_category_img_id"
+                       android:layout_width="match_parent"
+                       android:adjustViewBounds="true"
+                       android:scaleType="centerCrop"
+                       android:layout_height="90dp"
+                       android:src="@drawable/accessories" />
+               </RelativeLayout>
+
+               <RelativeLayout
+                   android:layout_width="match_parent"
+                   android:layout_height="match_parent"
+
+                   >
+
+                   <TextView
+                       android:id="@+id/accessories_category_txt_id"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_centerInParent="true"
+                       android:text="Accessories"
+                       android:textFontWeight="@integer/config_navAnimTime"
+                       android:textColor="@color/colorPrimary"
+
+                       android:textSize="13dp" />
+               </RelativeLayout>
+           </LinearLayout>
+
+       </androidx.cardview.widget.CardView>
+   </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/article_List"
+        android:layout_marginEnd="1dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </LinearLayout>

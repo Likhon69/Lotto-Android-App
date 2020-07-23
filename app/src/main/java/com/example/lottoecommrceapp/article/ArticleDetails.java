@@ -9,6 +9,9 @@ public class ArticleDetails {
     @Expose
     private  String articleTitle;
 
+    @SerializedName("articleId")
+    @Expose
+    private  Integer articleId;
 
 
     @SerializedName("articleSubtitle")
@@ -51,6 +54,14 @@ public class ArticleDetails {
 
     public void setStandardPrice(Integer standardPrice) {
         this.standardPrice = standardPrice;
+    }
+
+    public Integer getArticleId() {
+        return articleId;
+    }
+
+    public void setArticleId(Integer articleId) {
+        this.articleId = articleId;
     }
 
 }

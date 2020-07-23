@@ -1,5 +1,7 @@
 package com.example.lottoecommrceapp;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
@@ -18,6 +20,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
+
 import com.android.volley.NetworkResponse;
 import com.android.volley.ParseError;
 import com.android.volley.Request;
@@ -39,9 +43,19 @@ import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.ListIterator;
 
-public class HomeActivity extends AppCompatActivity {
+import static com.example.lottoecommrceapp.article.ArticleDetailsAdapter.ARTICLE_ID;
+import static com.example.lottoecommrceapp.article.ArticleDetailsAdapter.ARTICLE_IMAGE_NAME;
+import static com.example.lottoecommrceapp.article.ArticleDetailsAdapter.ARTICLE_NAME;
+import static com.example.lottoecommrceapp.article.ArticleDetailsAdapter.ARTICLE_PRICE;
+
+public class HomeActivity extends AppCompatActivity implements ArticleDetailsAdapter.onItemClickListener {
     private static final String TAG = MainActivity.class.getSimpleName();
     private static final String URL = "http://192.168.5.27/api/ArticleGet/GetAllArticleDetails";
     private static final String URL2 = "http://192.168.5.27/Likhon";
@@ -50,6 +64,10 @@ public class HomeActivity extends AppCompatActivity {
     private RequestQueue mQueue;
     private FrameLayout frameLayout;
     private SliderView sliderView;
+
+    public ArrayList<ArticleDetails> lista=new ArrayList<ArticleDetails>();
+    private List<ArticleDetails> articleDetailsList = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,12 +77,12 @@ public class HomeActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-        DrawerLayout drawer = findViewById(R.id.drawer);
-        NavigationView navigationView = findViewById(R.id.nav_view);
-        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this,drawer,toolbar,R.string.open,R.string.close);
+     /*   DrawerLayout drawer = findViewById(R.id.drawer);
+        NavigationView navigationView = findViewById(R.id.nav_view);*/
+       /* ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this,drawer,toolbar,R.string.open,R.string.close);
         drawer.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.setDrawerIndicatorEnabled(true);
-        actionBarDrawerToggle.syncState();
+        actionBarDrawerToggle.syncState();*/
        /* frameLayout = findViewById(R.id.main_frameLayout);
        setFragment(new HomeFragment());*/
 
@@ -87,7 +105,7 @@ public class HomeActivity extends AppCompatActivity {
                 Log.i("GGG", "onIndicatorClicked: " + sliderView.getCurrentPagePosition());
             }
         });
-      /*  CardView cardView = findViewById(R.id.men_card);
+       /* CardView cardView = findViewById(R.id.men_card);
         cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -96,10 +114,11 @@ public class HomeActivity extends AppCompatActivity {
             }
         });*/
         //article details code
-        final RecyclerView articleAllList = findViewById(R.id.article_List);
-        GridLayoutManager layoutManager = new GridLayoutManager(this,2);
-        //layoutManager.setOrientation(RecyclerView.HORIZONTAL);
-        articleAllList.setLayoutManager(layoutManager);
+
+        articleDetailsList = lista;
+
+
+
         StringRequest request = new StringRequest(Request.Method.GET,URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -108,10 +127,10 @@ public class HomeActivity extends AppCompatActivity {
                 Gson gson = gsonbuilder.create();
 
                 articleDetails = gson.fromJson(response,ArticleDetails[].class);
-                //articleDetails2 = articleDetails.toString();
 
 
-                articleAllList.setAdapter(new ArticleDetailsAdapter(HomeActivity.this,articleDetails));
+
+                passData(articleDetails);
 
 
             }
@@ -123,8 +142,10 @@ public class HomeActivity extends AppCompatActivity {
 
             }
         });
+
         RequestQueue Queue = Volley.newRequestQueue(this);
         Queue.add(request);
+
     }
 
     public  boolean onCreateOptionsMenu(Menu menu){
@@ -151,4 +172,31 @@ public class HomeActivity extends AppCompatActivity {
         //fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }*/
+
+  public void  passData(ArticleDetails[] article){
+
+      for(int i =0;i<article.length;i++){
+          lista.add(article[i]);
+      }
+      final RecyclerView articleAllList = findViewById(R.id.article_List);
+      GridLayoutManager layoutManager = new GridLayoutManager(this,2);
+     /* layoutManager.setOrientation(RecyclerView.VERTICAL
+      );*/
+      articleAllList.setLayoutManager(layoutManager);
+
+      ArticleDetailsAdapter adapter = new ArticleDetailsAdapter(HomeActivity.this,articleDetailsList);
+      articleAllList.setAdapter(adapter);
+      adapter.setOnItemClickListner(HomeActivity.this);
+  }
+
+    @Override
+    public void onItemClick(int position) {
+        Intent articleDetailsIntent = new Intent(this,ArticleDetailsActivity.class);
+        ArticleDetails checkedItem = articleDetailsList.get(position);
+        articleDetailsIntent.putExtra(ARTICLE_NAME,checkedItem.getArticleTitle());
+        articleDetailsIntent.putExtra(ARTICLE_PRICE,checkedItem.getStandardPrice());
+        articleDetailsIntent.putExtra(ARTICLE_IMAGE_NAME,checkedItem.getArticleMasterImage());
+        articleDetailsIntent.putExtra(ARTICLE_ID,checkedItem.getArticleId());
+        startActivity(articleDetailsIntent);
+    }
 }
