@@ -50,6 +50,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 
+import static com.example.lottoecommrceapp.article.ArticleDetailsAdapter.ARTICLE_DESCRIPTION;
+import static com.example.lottoecommrceapp.article.ArticleDetailsAdapter.ARTICLE_DISCOUNT_PRICE;
+import static com.example.lottoecommrceapp.article.ArticleDetailsAdapter.ARTICLE_DISCOUNT_RATE;
 import static com.example.lottoecommrceapp.article.ArticleDetailsAdapter.ARTICLE_ID;
 import static com.example.lottoecommrceapp.article.ArticleDetailsAdapter.ARTICLE_IMAGE_NAME;
 import static com.example.lottoecommrceapp.article.ArticleDetailsAdapter.ARTICLE_NAME;
@@ -197,6 +200,9 @@ public class HomeActivity extends AppCompatActivity implements ArticleDetailsAda
         articleDetailsIntent.putExtra(ARTICLE_PRICE,checkedItem.getStandardPrice());
         articleDetailsIntent.putExtra(ARTICLE_IMAGE_NAME,checkedItem.getArticleMasterImage());
         articleDetailsIntent.putExtra(ARTICLE_ID,checkedItem.getArticleId());
+        articleDetailsIntent.putExtra(ARTICLE_DISCOUNT_RATE,checkedItem.getDiscountRate());
+        articleDetailsIntent.putExtra(ARTICLE_DISCOUNT_PRICE,checkedItem.getDiscountPrice());
+        articleDetailsIntent.putExtra(ARTICLE_DESCRIPTION,checkedItem.getDescription());
         startActivity(articleDetailsIntent);
     }
 }

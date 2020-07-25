@@ -1,8 +1,12 @@
 package com.example.lottoecommrceapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
@@ -17,13 +21,21 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.example.lottoecommrceapp.article.ArticleDetails;
+import com.example.lottoecommrceapp.article.ArticleImageAdapter;
 import com.example.lottoecommrceapp.article.ArticleImageModel;
+import com.example.lottoecommrceapp.article.ArticleVariant;
+import com.example.lottoecommrceapp.article.ArticleVariantAdapter;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Arrays;
+
+import static com.example.lottoecommrceapp.article.ArticleDetailsAdapter.ARTICLE_DESCRIPTION;
+import static com.example.lottoecommrceapp.article.ArticleDetailsAdapter.ARTICLE_DISCOUNT_PRICE;
+import static com.example.lottoecommrceapp.article.ArticleDetailsAdapter.ARTICLE_DISCOUNT_RATE;
 import static com.example.lottoecommrceapp.article.ArticleDetailsAdapter.ARTICLE_ID;
 import static com.example.lottoecommrceapp.article.ArticleDetailsAdapter.ARTICLE_IMAGE_NAME;
 import static com.example.lottoecommrceapp.article.ArticleDetailsAdapter.ARTICLE_NAME;
@@ -31,9 +43,12 @@ import static com.example.lottoecommrceapp.article.ArticleDetailsAdapter.ARTICLE
 
 public class ArticleDetailsActivity extends AppCompatActivity {
     private static final String TAG = ArticleDetailsActivity.class.getSimpleName();
-    private static final String URL = "http://192.168.5.27/api/ArticleGet/GetArticleImageListByID/";
+    private static final String URL_IMG = "http://192.168.5.27/api/ArticleGet/GetArticleImageListByID/";
+    private static final String URL_VARIANT = "http://192.168.5.27/api/ArticleGet/GetArticleVarianListByID/";
     private static final String ImgUrl = "http://192.168.5.27/Likhon/";
     private ArticleImageModel[] articleDetails;
+    private ArticleVariant[] articleVariant;
+
     private RequestQueue mQueue;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,21 +59,33 @@ public class ArticleDetailsActivity extends AppCompatActivity {
         String articleMasterImage = intent.getStringExtra(ARTICLE_IMAGE_NAME);
         int articlePrice = intent.getIntExtra(ARTICLE_PRICE,0);
         int articleId = intent.getIntExtra(ARTICLE_ID,0);
+        int articleDiscountRate = intent.getIntExtra(ARTICLE_DISCOUNT_RATE,0);
+        int articleDiscountPrice = intent.getIntExtra(ARTICLE_DISCOUNT_PRICE,0);
+        String articleDiscription = intent.getStringExtra(ARTICLE_DESCRIPTION);
         passId(articleId);
-        ImageView imageView = findViewById(R.id.article_detaills_image_id);
+        getSize(articleId);
         TextView textAricleTitle = findViewById(R.id.article_title_id);
         TextView textArticlePrice = findViewById(R.id.article_price_txt);
-        TextView textId = findViewById(R.id.article_id_txt);
+        TextView textArticleDiscountRate = findViewById(R.id.article_discount_txt);
+        TextView textArticleDiscountPrice = findViewById(R.id.article_price_discount_txt);
+        TextView textArticleDescription = findViewById(R.id.article_description_txt);
 
-        Glide.with(imageView.getContext()).load(ImgUrl+articleMasterImage).fitCenter().into(imageView);
+
+
         textAricleTitle.setText(articleTitle);
         textArticlePrice.setText(Integer.toString(articlePrice));
-        textId.setText(Integer.toString(articleId));
+        textArticlePrice.setPaintFlags(textArticlePrice.getPaintFlags()| Paint.STRIKE_THRU_TEXT_FLAG);
+        textArticleDiscountRate.setText(Integer.toString(articleDiscountRate));
+        textArticleDiscountPrice.setText(Integer.toString(articleDiscountPrice));
+        textArticleDescription.setText(articleDiscription);
+
 
     }
 
     private  void passId(int id){
-        StringRequest request = new StringRequest(Request.Method.GET,URL+id, new Response.Listener<String>() {
+        final ViewPager mPager = findViewById(R.id.image_viewPager);
+
+        StringRequest request = new StringRequest(Request.Method.GET,URL_IMG+id, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Log.e(TAG, "Successfully signed in response : " + response.toString());
@@ -68,7 +95,7 @@ public class ArticleDetailsActivity extends AppCompatActivity {
                 articleDetails = gson.fromJson(response,ArticleImageModel[].class);
 
 
-
+               mPager.setAdapter(new ArticleImageAdapter(articleDetails));
 
 
 
@@ -82,6 +109,35 @@ public class ArticleDetailsActivity extends AppCompatActivity {
             }
         });
 
+        RequestQueue Queue = Volley.newRequestQueue(this);
+        Queue.add(request);
+    }
+    private void getSize(int id){
+        final RecyclerView size_recycler = findViewById(R.id.recyclerview_all_size);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager.setOrientation(RecyclerView.HORIZONTAL);
+        StringRequest request = new StringRequest(Request.Method.GET,URL_VARIANT+id, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.e(TAG, "Successfully signed in variant response : " + response.toString());
+                GsonBuilder gsonbuilder = new GsonBuilder();
+                Gson gson = gsonbuilder.create();
+
+                articleVariant = gson.fromJson(response, ArticleVariant[].class);
+
+             size_recycler.setAdapter(new ArticleVariantAdapter(articleVariant));
+
+
+
+            }
+
+
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
         RequestQueue Queue = Volley.newRequestQueue(this);
         Queue.add(request);
     }

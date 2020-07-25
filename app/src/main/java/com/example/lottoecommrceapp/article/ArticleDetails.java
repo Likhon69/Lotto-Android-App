@@ -13,6 +13,19 @@ public class ArticleDetails {
     @Expose
     private  Integer articleId;
 
+    //RATE
+    @SerializedName("discountRate")
+    @Expose
+    private  Integer discountRate;
+    //d_price
+    @SerializedName("discountPrice")
+    @Expose
+    private  Integer discountPrice;
+    //description
+    @SerializedName("description")
+    @Expose
+    private  String description;
+
 
     @SerializedName("articleSubtitle")
     @Expose
@@ -20,6 +33,31 @@ public class ArticleDetails {
     @SerializedName("articleMasterImage")
     @Expose
     private String articleMasterImage;
+
+    public Integer getDiscountRate() {
+        return discountRate;
+    }
+
+    public void setDiscountRate(Integer discountRate) {
+        this.discountRate = discountRate;
+    }
+
+    public Integer getDiscountPrice() {
+        return discountPrice;
+    }
+
+    public void setDiscountPrice(Integer discountPrice) {
+        this.discountPrice = discountPrice;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     @SerializedName("standardPrice")
     @Expose
     private Integer standardPrice;

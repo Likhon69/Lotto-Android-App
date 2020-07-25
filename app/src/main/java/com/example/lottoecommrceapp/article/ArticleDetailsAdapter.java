@@ -22,6 +22,9 @@ public class ArticleDetailsAdapter extends RecyclerView.Adapter<ArticleDetailsAd
     public static  String ARTICLE_PRICE = "standardPrice";
     public static  String ARTICLE_IMAGE_NAME = "articleMasterImage";
     public static  String ARTICLE_ID = "articleId";
+    public static  String ARTICLE_DISCOUNT_RATE = "discountRate";
+    public static  String ARTICLE_DISCOUNT_PRICE = "discountPrice";
+    public static String ARTICLE_DESCRIPTION = "description";
     private static final String ImgUrl = "http://192.168.5.27/Likhon/";
     @NonNull
     List<ArticleDetails> lista = new ArrayList<>();

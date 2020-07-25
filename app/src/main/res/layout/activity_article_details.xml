@@ -7,60 +7,176 @@
     android:orientation="vertical"
     tools:context=".ArticleDetailsActivity">
 
-    <ImageView
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/image_viewPager"
         android:layout_width="match_parent"
         android:layout_height="300dp"
-        android:id="@+id/article_detaills_image_id"
-        android:src="@drawable/accessories"/>
-    
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/article_title_id"
-        android:text="Casual Shoe"
-        android:textSize="20sp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"/>
-    <TextView
-        android:id="@+id/article_id_txt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="3dp"
-        android:layout_centerInParent="true"
-        android:text="3"
-        android:textFontWeight="@integer/config_navAnimTime"
-        android:textColor="@color/colorPrimary"
-        android:textSize="25dp" />
+        android:background="#FFFFFF"
+  />
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:layout_margin="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:background="#FFFFFF"
+        android:orientation="vertical"
+        >
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+
+            android:orientation="horizontal">
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/currency"
+                    android:layout_width="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:layout_margin="1dp"
+                    android:scaleType="centerCrop"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/unnamed" />
+                <TextView
+                    android:id="@+id/article_price_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="1dp"
+                    android:layout_centerInParent="true"
+                    android:text="3000"
+                    android:layout_toRightOf="@id/currency"
+                    android:textFontWeight="@integer/config_navAnimTime"
+
+                    android:textSize="20dp" />
+                <TextView
+                    android:id="@+id/article_discount_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="25dp"
+                    android:layout_centerInParent="true"
+                    android:text="30"
+                    android:layout_toRightOf="@id/article_price_txt"
+                    android:textFontWeight="@integer/config_navAnimTime"
+
+                    android:textSize="20dp" />
+                <TextView
+                    android:id="@+id/article_percntge_price_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:layout_centerInParent="true"
+                    android:text="% off"
+                    android:layout_toRightOf="@id/article_discount_txt"
+                    android:textFontWeight="@integer/config_navAnimTime"
+
+                    android:textSize="20dp" />
+            </RelativeLayout>
+
+
+
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+
+
+            android:orientation="horizontal">
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/currency_discount"
+                    android:layout_width="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:layout_margin="1dp"
+                    android:scaleType="centerCrop"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/unnamed" />
+                <TextView
+                    android:id="@+id/article_price_discount_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="1dp"
+                    android:layout_centerInParent="true"
+                    android:text="3000"
+                    android:layout_toRightOf="@id/currency_discount"
+                    android:textFontWeight="@integer/config_navAnimTime"
+                    android:textColor="@color/colorAccent"
+                    android:textStyle="bold"
+                    android:textSize="20dp" />
+
+            </RelativeLayout>
+
+
+
+
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/article_title_id"
+            android:text="Casual Shoe"
+            android:textSize="20sp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:background="#FFFFFF">
+        <TextView
+            android:id="@+id/article_description_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:padding="6dp"
+            android:layout_centerInParent="true"
+            android:text="Therefore, learning to use articles accurately takes a long time. To master article usage, it is necessary to do a great deal of reading, notice how articles are used in published texts, and take notes that can apply back to your own writing."
+
+            android:textFontWeight="@integer/config_navAnimTime"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
         android:orientation="horizontal">
         <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            >
 
-            <ImageView
-                android:id="@+id/currency"
+            <TextView
+                android:id="@+id/article_size_txt"
                 android:layout_width="wrap_content"
-                android:adjustViewBounds="true"
-                android:layout_margin="1dp"
-                android:scaleType="centerCrop"
                 android:layout_height="wrap_content"
-                android:src="@drawable/unnamed" />
+
+                android:layout_centerInParent="true"
+                android:text="Available Size:"
+
+                android:textFontWeight="@integer/config_navAnimTime"
+
+                android:textSize="20dp" />
+
+
         </RelativeLayout>
 
-
-        <TextView
-            android:id="@+id/article_price_txt"
+        <androidx.recyclerview.widget.RecyclerView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="3dp"
-            android:layout_centerInParent="true"
-            android:text="3000"
-            android:textFontWeight="@integer/config_navAnimTime"
-            android:textColor="@color/colorPrimary"
-            android:textSize="25dp" />
+            android:layout_marginStart="10dp"
+            android:id="@+id/recyclerview_all_size"/>
+
+
+
+
 
     </LinearLayout>
 
