@@ -203,6 +203,7 @@ public class HomeActivity extends AppCompatActivity implements ArticleDetailsAda
         articleDetailsIntent.putExtra(ARTICLE_DISCOUNT_RATE,checkedItem.getDiscountRate());
         articleDetailsIntent.putExtra(ARTICLE_DISCOUNT_PRICE,checkedItem.getDiscountPrice());
         articleDetailsIntent.putExtra(ARTICLE_DESCRIPTION,checkedItem.getDescription());
+
         startActivity(articleDetailsIntent);
     }
 }

@@ -10,6 +10,8 @@ import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -57,7 +59,7 @@ public class ArticleDetailsActivity extends AppCompatActivity {
     private List<ArticleVariant> articleVariantList = new ArrayList<>();
     private ArticleDetails[] articleDetailsAll;
     private List<ArticleDetails> articleDetailsList = new ArrayList<>();
-
+    private int ID;
     private RequestQueue mQueue;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,12 +69,15 @@ public class ArticleDetailsActivity extends AppCompatActivity {
         String articleTitle = intent.getStringExtra(ARTICLE_NAME);
         String articleMasterImage = intent.getStringExtra(ARTICLE_IMAGE_NAME);
         int articlePrice = intent.getIntExtra(ARTICLE_PRICE,0);
-        int articleId = intent.getIntExtra(ARTICLE_ID,0);
+        final int articleId = intent.getIntExtra(ARTICLE_ID,0);
         int articleDiscountRate = intent.getIntExtra(ARTICLE_DISCOUNT_RATE,0);
         int articleDiscountPrice = intent.getIntExtra(ARTICLE_DISCOUNT_PRICE,0);
         String articleDiscription = intent.getStringExtra(ARTICLE_DESCRIPTION);
         passId(articleId);
         getSize(articleId);
+        passArticleId();
+        ID = articleId;
+
         TextView textAricleTitle = findViewById(R.id.article_title_id);
         TextView textArticlePrice = findViewById(R.id.article_price_txt);
         TextView textArticleDiscountRate = findViewById(R.id.article_discount_txt);
@@ -199,4 +204,21 @@ public class ArticleDetailsActivity extends AppCompatActivity {
         TextView textColor = findViewById(R.id.article_percntge_color_txt);
         textColor.setText(article.getColor());
     }
+
+    private void passArticleId(){
+        Button btn_order = findViewById(R.id.order_id);
+        btn_order.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+             clickOrder();
+            }
+        });
+
+    }
+    private void clickOrder(){
+        Intent orderIntent = new Intent(this,OrderDetails.class);
+        orderIntent.putExtra("ArticleId",ID);
+        startActivity(orderIntent);
+    }
+
 }
