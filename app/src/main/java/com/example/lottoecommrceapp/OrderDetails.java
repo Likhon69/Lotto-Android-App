@@ -96,6 +96,6 @@ public class OrderDetails extends AppCompatActivity {
         };
         RequestQueue Queue = Volley.newRequestQueue(this);
         Queue.add(jsonObjReq);
-        Toast.makeText(getApplicationContext(),"Succesfully!",Toast.LENGTH_LONG).show();
+
     }
 }
