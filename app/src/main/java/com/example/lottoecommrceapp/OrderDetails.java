@@ -6,8 +6,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,6 +22,11 @@ import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
+import com.example.lottoecommrceapp.article.ArticleVariant;
+import com.example.lottoecommrceapp.article.ArticleVariantAdapter;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -30,16 +37,23 @@ import java.util.Map;
 public class OrderDetails extends AppCompatActivity {
     private static final String TAG = OrderDetails.class.getSimpleName();
     private static final String URL = "http://192.168.5.27/api/ArticleGet/PostData";
+    private static final String URL_VARIANT = "http://192.168.5.27/api/ArticleGet/GetArticleVarianListByID/";
     EditText _address,_name;
     private RequestQueue mQueue;
     private int Article_Id;
+    int articlePriceStandard;
+    int newValueQuantity;
+    ArticleVariant[] articleVariant;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_details);
         Intent intent = getIntent();
         int articleId = intent.getIntExtra("ArticleId",0);
+        int articlePrice = intent.getIntExtra("Article_Standard_Price",0);
+        getSize(articleId);
         Article_Id = articleId;
+        articlePriceStandard = articlePrice;
         _address = findViewById(R.id.address_id);
         _name = findViewById(R.id.name_id);
 
@@ -52,6 +66,17 @@ public class OrderDetails extends AppCompatActivity {
             @Override
             public void onClick(View v) {
             postData();
+            }
+        });
+
+        ElegantNumberButton btn_elegant = findViewById(R.id.number_button);
+        btn_elegant.setOnValueChangeListener(new ElegantNumberButton.OnValueChangeListener() {
+
+            @Override
+            public void onValueChange(ElegantNumberButton view, int oldValue, int newValue) {
+                Log.d(TAG, String.format("oldValue: %d   newValue: %d", oldValue, newValue));
+                newValueQuantity = newValue;
+                totalPrice(newValueQuantity);
             }
         });
     }
@@ -97,5 +122,44 @@ public class OrderDetails extends AppCompatActivity {
         RequestQueue Queue = Volley.newRequestQueue(this);
         Queue.add(jsonObjReq);
 
+    }
+    private void totalPrice(int quantity){
+        TextView totalPrice = findViewById(R.id.total_price);
+        totalPrice.setText(Integer.toString(quantity*articlePriceStandard));
+    }
+    private void getSize(int id){
+        StringRequest request = new StringRequest(Request.Method.GET,URL_VARIANT+id, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.e(TAG, "Successfully signed in variant response : " + response.toString());
+                GsonBuilder gsonbuilder = new GsonBuilder();
+                Gson gson = gsonbuilder.create();
+
+                articleVariant = gson.fromJson(response, ArticleVariant[].class);
+
+                showSize(articleVariant);
+
+
+
+
+            }
+
+
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+        RequestQueue Queue = Volley.newRequestQueue(this);
+        Queue.add(request);
+    }
+
+    private void showSize(ArticleVariant[] articleVariant){
+        Spinner spinner = findViewById(R.id.show_size);
+
+        ArrayAdapter adapter = new ArrayAdapter(this,android.R.layout.simple_spinner_item,articleVariant);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
     }
 }

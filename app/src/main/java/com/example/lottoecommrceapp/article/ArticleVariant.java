@@ -1,5 +1,7 @@
 package com.example.lottoecommrceapp.article;
 
+import androidx.annotation.NonNull;
+
 public class ArticleVariant {
     private Integer artV_Id;
     private String articleNo;
@@ -16,6 +18,15 @@ public class ArticleVariant {
 
     private Integer size;
     private String style;
+
+    public ArticleVariant(Integer artV_Id, String articleNo, String gender, String color, Integer size, String style) {
+        this.artV_Id = artV_Id;
+        this.articleNo = articleNo;
+        this.gender = gender;
+        this.color = color;
+        this.size = size;
+        this.style = style;
+    }
 
     public Integer getArtV_Id() {
         return artV_Id;
@@ -57,5 +68,11 @@ public class ArticleVariant {
 
     public void setStyle(String style) {
         this.style = style;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return size.toString();
     }
 }

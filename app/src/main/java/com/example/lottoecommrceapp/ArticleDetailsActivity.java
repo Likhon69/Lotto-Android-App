@@ -61,6 +61,7 @@ public class ArticleDetailsActivity extends AppCompatActivity {
     private List<ArticleDetails> articleDetailsList = new ArrayList<>();
     private int ID;
     private RequestQueue mQueue;
+    int standardPrice;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,15 +69,17 @@ public class ArticleDetailsActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String articleTitle = intent.getStringExtra(ARTICLE_NAME);
         String articleMasterImage = intent.getStringExtra(ARTICLE_IMAGE_NAME);
-        int articlePrice = intent.getIntExtra(ARTICLE_PRICE,0);
+        int articleStandardPrice = intent.getIntExtra(ARTICLE_PRICE,0);
         final int articleId = intent.getIntExtra(ARTICLE_ID,0);
         int articleDiscountRate = intent.getIntExtra(ARTICLE_DISCOUNT_RATE,0);
         int articleDiscountPrice = intent.getIntExtra(ARTICLE_DISCOUNT_PRICE,0);
+
         String articleDiscription = intent.getStringExtra(ARTICLE_DESCRIPTION);
         passId(articleId);
         getSize(articleId);
         passArticleId();
         ID = articleId;
+        standardPrice = articleStandardPrice;
 
         TextView textAricleTitle = findViewById(R.id.article_title_id);
         TextView textArticlePrice = findViewById(R.id.article_price_txt);
@@ -87,7 +90,7 @@ public class ArticleDetailsActivity extends AppCompatActivity {
 
 
         textAricleTitle.setText(articleTitle);
-        textArticlePrice.setText(Integer.toString(articlePrice));
+        textArticlePrice.setText(Integer.toString(articleStandardPrice));
         textArticlePrice.setPaintFlags(textArticlePrice.getPaintFlags()| Paint.STRIKE_THRU_TEXT_FLAG);
         textArticleDiscountRate.setText(Integer.toString(articleDiscountRate));
         textArticleDiscountPrice.setText(Integer.toString(articleDiscountPrice));
@@ -218,6 +221,7 @@ public class ArticleDetailsActivity extends AppCompatActivity {
     private void clickOrder(){
         Intent orderIntent = new Intent(this,OrderDetails.class);
         orderIntent.putExtra("ArticleId",ID);
+        orderIntent.putExtra("Article_Standard_Price",standardPrice);
         startActivity(orderIntent);
     }
 
