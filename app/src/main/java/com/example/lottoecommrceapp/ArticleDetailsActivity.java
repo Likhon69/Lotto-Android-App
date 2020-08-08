@@ -1,19 +1,24 @@
 package com.example.lottoecommrceapp;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -30,6 +35,7 @@ import com.example.lottoecommrceapp.article.ArticleImageModel;
 import com.example.lottoecommrceapp.article.ArticleSuggetionAdapter;
 import com.example.lottoecommrceapp.article.ArticleVariant;
 import com.example.lottoecommrceapp.article.ArticleVariantAdapter;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -78,6 +84,7 @@ public class ArticleDetailsActivity extends AppCompatActivity {
         passId(articleId);
         getSize(articleId);
         passArticleId();
+        addToCart();
         ID = articleId;
         standardPrice = articleStandardPrice;
 
@@ -224,5 +231,37 @@ public class ArticleDetailsActivity extends AppCompatActivity {
         orderIntent.putExtra("Article_Standard_Price",standardPrice);
         startActivity(orderIntent);
     }
+    private void addToCart(){
+        Button btn_add_to_cart = findViewById(R.id.add_to_cart_id);
+
+        btn_add_to_cart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showAddToCartDialog();
+            }
+        });
+    }
+    private void showAddToCartDialog(){
+
+        final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(ArticleDetailsActivity.this,R.style.BotomSheetDialogTheme);
+        View itemView = LayoutInflater.from(getApplicationContext()).inflate(R.layout.bottom_layout,
+                (LinearLayout)findViewById(R.id.bottom_sheetContainer)
+        );
+        itemView.findViewById(R.id.buttonShare).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(ArticleDetailsActivity.this, "Share....", Toast.LENGTH_SHORT).show();
+                bottomSheetDialog.dismiss();
+            }
+        });
+        bottomSheetDialog.setContentView(itemView);
+        bottomSheetDialog.show();
+
+       /* AlertDialog.Builder builder = new AlertDialog.Builder(ArticleDetailsActivity.this);
+        View itemView = LayoutInflater.from(getApplicationContext()).inflate(R.layout.trending_category_layout,null);
+        builder.setView(itemView);
+        builder.show();*/
+    }
+
 
 }

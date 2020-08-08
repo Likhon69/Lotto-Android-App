@@ -23,6 +23,8 @@
             android:layout_width="100dp"
             android:layout_height="30dp"
             android:layout_margin="10dp"
+
+            android:background="@drawable/elegant_border"
             />
     </LinearLayout>
     <LinearLayout
@@ -94,12 +96,7 @@
         android:textColor="#fff"
         android:background="@color/colorPrimary"/>
 
-    <TextView
-        android:id="@+id/show_spinner"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Spinner"
-        android:layout_marginStart="10dp"/>
+
 
 
 
