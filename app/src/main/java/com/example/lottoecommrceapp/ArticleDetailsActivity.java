@@ -244,7 +244,7 @@ public class ArticleDetailsActivity extends AppCompatActivity {
     private void showAddToCartDialog(){
 
         final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(ArticleDetailsActivity.this,R.style.BotomSheetDialogTheme);
-        View itemView = LayoutInflater.from(getApplicationContext()).inflate(R.layout.bottom_layout,
+        View itemView = LayoutInflater.from(getApplicationContext()).inflate(R.layout.bottom_layout_add_to_cart,
                 (LinearLayout)findViewById(R.id.bottom_sheetContainer)
         );
         itemView.findViewById(R.id.buttonShare).setOnClickListener(new View.OnClickListener() {

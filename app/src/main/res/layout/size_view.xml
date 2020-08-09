@@ -4,8 +4,8 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_margin="5dp"
-    app:cardCornerRadius="3dp"
-    app:cardElevation="2dp">
+   android:id="@+id/size_change_color"
+    >
 
     <TextView
         android:layout_width="wrap_content"
@@ -14,7 +14,7 @@
         android:text="34"
 
         android:textSize="20dp"
-        android:textColor="@color/colorAccent"
+
         android:layout_margin="10dp"/>
 
 </FrameLayout>

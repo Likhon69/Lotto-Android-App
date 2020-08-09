@@ -249,6 +249,7 @@
                android:layout_height="35dp"
                android:id="@+id/order_id"
                android:text="Buy Now"
+               android:textColor="#ffffff"
                android:layout_marginStart="35dp"
                android:background="@color/colorAccent"/>
            <Button
@@ -256,6 +257,7 @@
                android:layout_height="35dp"
                android:id="@+id/add_to_cart_id"
                android:text="Add to Cart"
+               android:textColor="#ffffff"
                android:layout_marginStart="35dp"
                android:background="@color/colorAccent"/>
        </LinearLayout>
