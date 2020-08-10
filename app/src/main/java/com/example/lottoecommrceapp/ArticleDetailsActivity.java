@@ -28,6 +28,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
+import com.example.lottoecommrceapp.article.AddToCartData;
 import com.example.lottoecommrceapp.article.ArticleDetails;
 import com.example.lottoecommrceapp.article.ArticleDetailsAdapter;
 import com.example.lottoecommrceapp.article.ArticleImageAdapter;
@@ -65,6 +66,7 @@ public class ArticleDetailsActivity extends AppCompatActivity {
     private List<ArticleVariant> articleVariantList = new ArrayList<>();
     private ArticleDetails[] articleDetailsAll;
     private List<ArticleDetails> articleDetailsList = new ArrayList<>();
+    private List<AddToCartData> addToCartDataList = new ArrayList<>();
     private int ID;
     private RequestQueue mQueue;
     int standardPrice;
@@ -84,10 +86,11 @@ public class ArticleDetailsActivity extends AppCompatActivity {
         passId(articleId);
         getSize(articleId);
         passArticleId();
-        addToCart();
+
         ID = articleId;
         standardPrice = articleStandardPrice;
-
+        addToCartDataList.add(new AddToCartData(articleStandardPrice,articleDiscountPrice,articleMasterImage,articleId,articleDiscountRate));
+        addToCart(addToCartDataList);
         TextView textAricleTitle = findViewById(R.id.article_title_id);
         TextView textArticlePrice = findViewById(R.id.article_price_txt);
         TextView textArticleDiscountRate = findViewById(R.id.article_discount_txt);
@@ -231,17 +234,19 @@ public class ArticleDetailsActivity extends AppCompatActivity {
         orderIntent.putExtra("Article_Standard_Price",standardPrice);
         startActivity(orderIntent);
     }
-    private void addToCart(){
+    private void addToCart(List<AddToCartData> addToCartDataList){
         Button btn_add_to_cart = findViewById(R.id.add_to_cart_id);
-
+        final List<AddToCartData> addToCartData;
+        addToCartData = addToCartDataList;
+        //final int finalId = id;
         btn_add_to_cart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showAddToCartDialog();
+                showAddToCartDialog(addToCartData);
             }
         });
     }
-    private void showAddToCartDialog(){
+    private void showAddToCartDialog(List<AddToCartData> addToCartDataList){
 
         final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(ArticleDetailsActivity.this,R.style.BotomSheetDialogTheme);
         View itemView = LayoutInflater.from(getApplicationContext()).inflate(R.layout.bottom_layout_add_to_cart,
@@ -256,7 +261,46 @@ public class ArticleDetailsActivity extends AppCompatActivity {
         });
         bottomSheetDialog.setContentView(itemView);
         bottomSheetDialog.show();
+        TextView standardPriceTxt = itemView.findViewById(R.id.article_price_txt);
+        TextView discountRateTxt = itemView.findViewById(R.id.article_discount_txt);
+        TextView discountPriceTxt = itemView.findViewById(R.id.article_price_discount_txt);
+        ImageView addToCartImage = itemView.findViewById(R.id.cart_image);
+        final RecyclerView size_recycler = itemView.findViewById(R.id.recyclerview_all_size);
+        standardPriceTxt.setText(Integer.toString(addToCartDataList.get(0).getStandardPrice()));
+        discountRateTxt.setText(Integer.toString(addToCartDataList.get(0).getDiscountRate()));
+        discountPriceTxt.setText(Integer.toString(addToCartDataList.get(0).getDiscountPrice()));
+        Glide.with(addToCartImage.getContext()).load(ImgUrl+addToCartDataList.get(0).getArticleMasterImage())
+                .fitCenter()
+                .into(addToCartImage);
 
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        size_recycler.setLayoutManager(layoutManager);
+        layoutManager.setOrientation(RecyclerView.HORIZONTAL);
+        StringRequest request = new StringRequest(Request.Method.GET,URL_VARIANT+addToCartDataList.get(0).getArticleId(), new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.e(TAG, "Successfully signed in variant response : " + response.toString());
+                GsonBuilder gsonbuilder = new GsonBuilder();
+                Gson gson = gsonbuilder.create();
+
+                articleVariant = gson.fromJson(response, ArticleVariant[].class);
+                colorData(articleVariant[0]);
+
+                size_recycler.setAdapter(new ArticleVariantAdapter(articleVariant));
+
+
+
+            }
+
+
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+        RequestQueue Queue = Volley.newRequestQueue(this);
+        Queue.add(request);
        /* AlertDialog.Builder builder = new AlertDialog.Builder(ArticleDetailsActivity.this);
         View itemView = LayoutInflater.from(getApplicationContext()).inflate(R.layout.trending_category_layout,null);
         builder.setView(itemView);
