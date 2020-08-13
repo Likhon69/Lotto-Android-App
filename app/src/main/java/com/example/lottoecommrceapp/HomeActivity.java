@@ -30,6 +30,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.lottoecommrceapp.addtocart.AddToCartDataSource;
+import com.example.lottoecommrceapp.addtocart.AddToCartDatabase;
+import com.example.lottoecommrceapp.addtocart.AddToCartRepository;
+import com.example.lottoecommrceapp.addtocart.Common;
 import com.example.lottoecommrceapp.article.ArticleDetails;
 import com.example.lottoecommrceapp.article.ArticleDetailsAdapter;
 import com.example.lottoecommrceapp.slider.SliderAdapter;
@@ -121,7 +125,6 @@ public class HomeActivity extends AppCompatActivity implements ArticleDetailsAda
         articleDetailsList = lista;
 
 
-
         StringRequest request = new StringRequest(Request.Method.GET,URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -150,6 +153,8 @@ public class HomeActivity extends AppCompatActivity implements ArticleDetailsAda
         Queue.add(request);
 
     }
+
+
 
     public  boolean onCreateOptionsMenu(Menu menu){
         getMenuInflater().inflate(R.menu.home,menu);

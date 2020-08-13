@@ -28,6 +28,11 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
+import com.example.lottoecommrceapp.addtocart.AddToCartDataSource;
+import com.example.lottoecommrceapp.addtocart.AddToCartDatabase;
+import com.example.lottoecommrceapp.addtocart.AddToCartModel;
+import com.example.lottoecommrceapp.addtocart.AddToCartRepository;
+import com.example.lottoecommrceapp.addtocart.Common;
 import com.example.lottoecommrceapp.article.AddToCartData;
 import com.example.lottoecommrceapp.article.ArticleDetails;
 import com.example.lottoecommrceapp.article.ArticleDetailsAdapter;
@@ -255,7 +260,7 @@ public class ArticleDetailsActivity extends AppCompatActivity {
         itemView.findViewById(R.id.buttonShare).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(ArticleDetailsActivity.this, "Share....", Toast.LENGTH_SHORT).show();
+              addToCartItem();
                 bottomSheetDialog.dismiss();
             }
         });
@@ -272,7 +277,7 @@ public class ArticleDetailsActivity extends AppCompatActivity {
         Glide.with(addToCartImage.getContext()).load(ImgUrl+addToCartDataList.get(0).getArticleMasterImage())
                 .fitCenter()
                 .into(addToCartImage);
-
+        initDB();
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         size_recycler.setLayoutManager(layoutManager);
         layoutManager.setOrientation(RecyclerView.HORIZONTAL);
@@ -305,6 +310,26 @@ public class ArticleDetailsActivity extends AppCompatActivity {
         View itemView = LayoutInflater.from(getApplicationContext()).inflate(R.layout.trending_category_layout,null);
         builder.setView(itemView);
         builder.show();*/
+
+
+
+
+    }
+    private void initDB() {
+        Common.addToCartDatabase = AddToCartDatabase.getInstance(this);
+        Common.addToCartRepository = AddToCartRepository.getInstance(AddToCartDataSource.getInstance(Common.addToCartDatabase.addToCartDao()));
+
+    }
+
+    private void addToCartItem(){
+        AddToCartModel cartModel = new AddToCartModel();
+        cartModel.articleMasterImage = addToCartDataList.get(0).getArticleMasterImage();
+        cartModel.discountPrice = addToCartDataList.get(0).getDiscountPrice();
+        cartModel.discountRate = addToCartDataList.get(0).getDiscountRate();
+        cartModel.standardPrice = addToCartDataList.get(0).getStandardPrice();
+        Common.addToCartRepository.insertToCart(cartModel);
+        Log.d("E_Debug",new Gson().toJson(cartModel));
+        Toast.makeText(ArticleDetailsActivity.this, "Added to cart", Toast.LENGTH_SHORT).show();
     }
 
 
