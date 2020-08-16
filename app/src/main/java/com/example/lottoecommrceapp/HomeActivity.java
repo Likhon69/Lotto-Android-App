@@ -17,10 +17,12 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.android.volley.NetworkResponse;
 import com.android.volley.ParseError;
@@ -41,6 +43,7 @@ import com.example.lottoecommrceapp.slider.SliderItem;
 import com.google.android.material.navigation.NavigationView;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.nex3z.notificationbadge.NotificationBadge;
 import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType;
 import com.smarteist.autoimageslider.IndicatorView.draw.controller.DrawController;
 import com.smarteist.autoimageslider.SliderAnimations;
@@ -71,6 +74,10 @@ public class HomeActivity extends AppCompatActivity implements ArticleDetailsAda
     private RequestQueue mQueue;
     private FrameLayout frameLayout;
     private SliderView sliderView;
+    MenuItem menuItem;
+    TextView badgeCounter;
+    TextView badge;
+    int pendingNotifications =3 ;
 
     public ArrayList<ArticleDetails> lista=new ArrayList<ArticleDetails>();
     private List<ArticleDetails> articleDetailsList = new ArrayList<>();
@@ -151,13 +158,27 @@ public class HomeActivity extends AppCompatActivity implements ArticleDetailsAda
 
         RequestQueue Queue = Volley.newRequestQueue(this);
         Queue.add(request);
+        initDB();
 
     }
 
+    private void initDB() {
+        Common.addToCartDatabase = AddToCartDatabase.getInstance(this);
+        Common.addToCartRepository = AddToCartRepository.getInstance(AddToCartDataSource.getInstance(Common.addToCartDatabase.addToCartDao()));
+
+    }
+
+    public  boolean onCreateOptionsMenu( Menu menu){
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.home, menu);
+       View view = menu.findItem(R.id.cart_id).getActionView();
 
 
-    public  boolean onCreateOptionsMenu(Menu menu){
-        getMenuInflater().inflate(R.menu.home,menu);
+
+        badge = view.findViewById(R.id.badge_id);
+        updateCartCount();
+
+
     MenuItem item = menu.findItem(R.id.search_id);
     SearchView searchView = (SearchView) item.getActionView();
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -174,12 +195,37 @@ public class HomeActivity extends AppCompatActivity implements ArticleDetailsAda
 
         return  true;
 }
-  /*  private  void setFragment(Fragment fragment){
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(frameLayout.getId(),fragment);
-        //fragmentTransaction.addToBackStack(null);
-        fragmentTransaction.commit();
-    }*/
+
+public boolean onOptionsItemSelected(MenuItem item){
+        int id = item.getItemId();
+        if(id==R.id.cart_id){
+            return true;
+        }
+        return  super.onOptionsItemSelected(item);
+}
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updateCartCount();
+    }
+
+    private void updateCartCount() {
+        if(badge==null) return;
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if(Common.addToCartRepository.countCartItems()==0){
+                    badge.setVisibility(View.INVISIBLE);
+                }else {
+                    badge.setVisibility(View.VISIBLE);
+                    badge.setText(String.valueOf(Common.addToCartRepository.countCartItems()));
+                }
+            }
+        });
+
+    }
+
 
   public void  passData(ArticleDetails[] article){
 
@@ -211,4 +257,6 @@ public class HomeActivity extends AppCompatActivity implements ArticleDetailsAda
 
         startActivity(articleDetailsIntent);
     }
+
+
 }
