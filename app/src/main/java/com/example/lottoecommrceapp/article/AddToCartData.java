@@ -6,6 +6,8 @@ public class AddToCartData {
     private String articleMasterImage;
     private int articleId;
     private int discountRate;
+    private String articleTitle;
+
 
 
     public int getDiscountRate() {
@@ -16,12 +18,23 @@ public class AddToCartData {
         this.discountRate = discountRate;
     }
 
-    public AddToCartData(int standardPrice, int discountPrice, String articleMasterImage, int articleId, int discountRate) {
+
+    public String getArticleTitle() {
+        return articleTitle;
+    }
+
+    public void setArticleTitle(String articleTitle) {
+        this.articleTitle = articleTitle;
+    }
+
+    public AddToCartData(int standardPrice, int discountPrice, String articleMasterImage, int articleId, int discountRate, String articleTitle) {
         this.standardPrice = standardPrice;
         this.discountPrice = discountPrice;
         this.articleMasterImage = articleMasterImage;
         this.articleId = articleId;
         this.discountRate = discountRate;
+        this.articleTitle = articleTitle;
+
     }
 
     public int getStandardPrice() {

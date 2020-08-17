@@ -21,6 +21,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -77,7 +78,7 @@ public class HomeActivity extends AppCompatActivity implements ArticleDetailsAda
     MenuItem menuItem;
     TextView badgeCounter;
     TextView badge;
-    int pendingNotifications =3 ;
+    ImageView img_icon;
 
     public ArrayList<ArticleDetails> lista=new ArrayList<ArticleDetails>();
     private List<ArticleDetails> articleDetailsList = new ArrayList<>();
@@ -176,6 +177,14 @@ public class HomeActivity extends AppCompatActivity implements ArticleDetailsAda
 
 
         badge = view.findViewById(R.id.badge_id);
+        img_icon = view.findViewById(R.id.cart_icon);
+        img_icon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+              Intent intent = new Intent(HomeActivity.this,Cart.class);
+              startActivity(intent);
+            }
+        });
         updateCartCount();
 
 

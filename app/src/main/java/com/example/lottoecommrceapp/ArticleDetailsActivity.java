@@ -94,7 +94,7 @@ public class ArticleDetailsActivity extends AppCompatActivity {
 
         ID = articleId;
         standardPrice = articleStandardPrice;
-        addToCartDataList.add(new AddToCartData(articleStandardPrice,articleDiscountPrice,articleMasterImage,articleId,articleDiscountRate));
+        addToCartDataList.add(new AddToCartData(articleStandardPrice,articleDiscountPrice,articleMasterImage,articleId,articleDiscountRate,articleTitle));
         addToCart(addToCartDataList);
         TextView textAricleTitle = findViewById(R.id.article_title_id);
         TextView textArticlePrice = findViewById(R.id.article_price_txt);
@@ -327,6 +327,7 @@ public class ArticleDetailsActivity extends AppCompatActivity {
         cartModel.discountPrice = addToCartDataList.get(0).getDiscountPrice();
         cartModel.discountRate = addToCartDataList.get(0).getDiscountRate();
         cartModel.standardPrice = addToCartDataList.get(0).getStandardPrice();
+        cartModel.articleTitle = addToCartDataList.get(0).getArticleTitle();
         Common.addToCartRepository.insertToCart(cartModel);
         Log.d("E_Debug",new Gson().toJson(cartModel));
         Toast.makeText(ArticleDetailsActivity.this, "Added to cart", Toast.LENGTH_SHORT).show();

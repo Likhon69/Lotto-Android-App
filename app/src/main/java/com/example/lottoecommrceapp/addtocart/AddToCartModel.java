@@ -16,6 +16,8 @@ public class AddToCartModel {
     public int discountPrice;
     @ColumnInfo(name="discountRate")
     public int discountRate;
+    @ColumnInfo(name = "articleTitle")
+    public String articleTitle;
 
 
 }
