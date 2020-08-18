@@ -28,6 +28,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
+import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
 import com.example.lottoecommrceapp.addtocart.AddToCartDataSource;
 import com.example.lottoecommrceapp.addtocart.AddToCartDatabase;
 import com.example.lottoecommrceapp.addtocart.AddToCartModel;
@@ -75,6 +76,7 @@ public class ArticleDetailsActivity extends AppCompatActivity {
     private int ID;
     private RequestQueue mQueue;
     int standardPrice;
+    int quantity_value;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -264,6 +266,16 @@ public class ArticleDetailsActivity extends AppCompatActivity {
                 bottomSheetDialog.dismiss();
             }
         });
+        ElegantNumberButton btn_elegant_add_to_cart = itemView.findViewById(R.id.quantity_button_add_to_cart);
+        btn_elegant_add_to_cart.setOnValueChangeListener(new ElegantNumberButton.OnValueChangeListener() {
+
+            @Override
+            public void onValueChange(ElegantNumberButton view, int oldValue, int newValue) {
+                Log.d(TAG, String.format("oldValue: %d   newValue: %d", oldValue, newValue));
+                quantity_value = newValue;
+
+            }
+        });
         bottomSheetDialog.setContentView(itemView);
         bottomSheetDialog.show();
         TextView standardPriceTxt = itemView.findViewById(R.id.article_price_txt);
@@ -328,6 +340,8 @@ public class ArticleDetailsActivity extends AppCompatActivity {
         cartModel.discountRate = addToCartDataList.get(0).getDiscountRate();
         cartModel.standardPrice = addToCartDataList.get(0).getStandardPrice();
         cartModel.articleTitle = addToCartDataList.get(0).getArticleTitle();
+        cartModel.articleId = addToCartDataList.get(0).getArticleId();
+        cartModel.quantity = quantity_value;
         Common.addToCartRepository.insertToCart(cartModel);
         Log.d("E_Debug",new Gson().toJson(cartModel));
         Toast.makeText(ArticleDetailsActivity.this, "Added to cart", Toast.LENGTH_SHORT).show();

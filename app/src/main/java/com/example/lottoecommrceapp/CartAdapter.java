@@ -19,6 +19,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartAdapterVie
     private static final String ImgUrl = "http://192.168.5.27/Likhon/";
     List<AddToCartModel> addToCartModelList;
     Context context;
+    int i =0;
 
     public CartAdapter(List<AddToCartModel> addToCartModelList, Context context) {
         this.addToCartModelList = addToCartModelList;
@@ -36,10 +37,12 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartAdapterVie
     public void onBindViewHolder(@NonNull CartAdapter.CartAdapterViewHolder holder, int position) {
         Glide.with(holder.add_to_cart_image.getContext()).load(ImgUrl+addToCartModelList.get(position).articleMasterImage)
                 .into(holder.add_to_cart_image);
+
         holder.add_to_cart_Article_title.setText(addToCartModelList.get(position).articleTitle);
         holder.add_to_cart_standard_price.setText(Integer.toString(addToCartModelList.get(position).standardPrice));
         holder.add_to_cart_discount_rate.setText(Integer.toString(addToCartModelList.get(position).discountRate));
         holder.add_to_cart_discount_price.setText(Integer.toString(addToCartModelList.get(position).discountPrice));
+        holder.add_to_cart_quantity.setText(Integer.toString(addToCartModelList.get(position).quantity));
     }
 
     @Override
@@ -53,6 +56,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartAdapterVie
         TextView add_to_cart_standard_price;
         TextView add_to_cart_discount_rate;
         TextView add_to_cart_discount_price;
+        TextView add_to_cart_quantity;
         public CartAdapterViewHolder(@NonNull View itemView) {
             super(itemView);
             add_to_cart_image = itemView.findViewById(R.id.cart_image_add_to_cart);
@@ -60,6 +64,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartAdapterVie
             add_to_cart_standard_price = itemView.findViewById(R.id.article_standard_price_add_to_cart);
             add_to_cart_discount_rate = itemView.findViewById(R.id.article_discount_rate_add_to_cart);
             add_to_cart_discount_price = itemView.findViewById(R.id.article_price_discount_add_to_cart);
+            add_to_cart_quantity = itemView.findViewById(R.id.button_quantity);
         }
     }
 }

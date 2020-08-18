@@ -33,10 +33,22 @@ public class ArticleDetails {
     @SerializedName("articleMasterImage")
     @Expose
     private String articleMasterImage;
+    @SerializedName("quantity")
+    @Expose
+    private Integer quantity;
+
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
+    }
 
     public Integer getDiscountRate() {
         return discountRate;
     }
+
 
     public void setDiscountRate(Integer discountRate) {
         this.discountRate = discountRate;
