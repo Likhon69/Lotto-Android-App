@@ -43,7 +43,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartAdapterVie
         holder.add_to_cart_discount_rate.setText(Integer.toString(addToCartModelList.get(position).discountRate));
         holder.add_to_cart_discount_price.setText(Integer.toString(addToCartModelList.get(position).discountPrice));
         holder.add_to_cart_quantity.setText(Integer.toString(addToCartModelList.get(position).quantity));
-    }
+}
 
     @Override
     public int getItemCount() {

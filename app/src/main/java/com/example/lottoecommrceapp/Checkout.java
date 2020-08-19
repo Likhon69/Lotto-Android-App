@@ -2,6 +2,7 @@ package com.example.lottoecommrceapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
@@ -35,16 +36,20 @@ public class Checkout extends AppCompatActivity {
     private List<ArticleDetails> articleDetailsList = new ArrayList<>();
     private ArticleDetails[] articleDetails;
     private ArticleDetails[] articleDetails2;
+    RecyclerView checkout_recycler;
     List<Integer>listOfQuantity = new ArrayList<>();
     CompositeDisposable compositeDisposable;
+    private List<AddToCartModel> addToCartModelList = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_checkout);
         compositeDisposable = new CompositeDisposable();
-        articleDetailsList = lista;
 
-
+        checkout_recycler = findViewById(R.id.checkout_recycler_view);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager.setOrientation(RecyclerView.VERTICAL);
+        checkout_recycler.setLayoutManager(layoutManager);
         StringRequest request = new StringRequest(Request.Method.GET,URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -71,38 +76,60 @@ public class Checkout extends AppCompatActivity {
 
         RequestQueue Queue = Volley.newRequestQueue(this);
         Queue.add(request);
+
         loadCartItems();
 
     }
-    public void  passData(ArticleDetails[] article){
 
-        for(int i =0;i<article.length;i++){
+
+
+    public void  passData(ArticleDetails[] article) {
+
+        for (int i = 0; i < article.length; i++) {
             lista.add(article[i]);
         }
-
+        displayCartCheckout(addToCartModelList);
     }
+
     private void loadCartItems() {
+
+
         compositeDisposable.add(
                 Common.addToCartRepository.getAllCartItems()
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribeOn(Schedulers.io())
                         .subscribe(new Consumer<List<AddToCartModel>>() { @Override
-                        public void accept(List<AddToCartModel> addToCartModels) throws Exception { displayCartCheckout(addToCartModels); }
+                        public void accept(List<AddToCartModel> addToCartModels) throws Exception {
+                            addToCartModelList = addToCartModels;
+
+
+                        }
                         })
         );
     }
+
+
     private void displayCartCheckout(List<AddToCartModel> addToCartModels){
        for(int i =0;i<addToCartModels.size();i++){
            checkQuantity(addToCartModels.get(i).articleId);
        }
     }
     private void  checkQuantity(int i){
+        articleDetailsList = lista;
         for (int j=0;j<articleDetailsList.size();j++){
             if(i==articleDetailsList.get(j).getArticleId()){
                 listOfQuantity.add(articleDetailsList.get(j).getQuantity());
                 break;
             }
         }
+        callCheckoutAdapter();
     }
+    private void callCheckoutAdapter(){
+        CheckoutAdapter adapter = new CheckoutAdapter(addToCartModelList,this,listOfQuantity);
+        checkout_recycler.setAdapter(adapter);
+    }
+
+
+
 }
 
