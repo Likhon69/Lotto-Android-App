@@ -11,6 +11,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -39,6 +40,8 @@ import com.example.lottoecommrceapp.addtocart.AddToCartRepository;
 import com.example.lottoecommrceapp.addtocart.Common;
 import com.example.lottoecommrceapp.article.ArticleDetails;
 import com.example.lottoecommrceapp.article.ArticleDetailsAdapter;
+import com.example.lottoecommrceapp.category.Category;
+import com.example.lottoecommrceapp.category.CategoryAdapter;
 import com.example.lottoecommrceapp.slider.SliderAdapter;
 import com.example.lottoecommrceapp.slider.SliderItem;
 import com.google.android.material.navigation.NavigationView;
@@ -129,7 +132,22 @@ public class HomeActivity extends AppCompatActivity implements ArticleDetailsAda
             }
         });*/
         //article details code
+       //categoryList
 
+        List<Category> categoryList = new ArrayList<>();
+        categoryList.add(new Category(R.drawable.men,"Men's"));
+        categoryList.add(new Category(R.drawable.women,"Women's"));
+        categoryList.add(new Category(R.drawable.accessories,"Accessories"));
+        categoryList.add(new Category(R.drawable.kid,"Kid's"));
+        final RecyclerView categoryListView = findViewById(R.id.category_List);
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager.setOrientation(RecyclerView.HORIZONTAL);
+        categoryListView.setLayoutManager(linearLayoutManager);
+        CategoryAdapter adapter = new CategoryAdapter(categoryList);
+        categoryListView.setAdapter(adapter);
+
+        // categoryList
         articleDetailsList = lista;
 
 
@@ -242,7 +260,7 @@ public boolean onOptionsItemSelected(MenuItem item){
           lista.add(article[i]);
       }
       final RecyclerView articleAllList = findViewById(R.id.article_List);
-      GridLayoutManager layoutManager = new GridLayoutManager(this,2);
+      StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL);
      /* layoutManager.setOrientation(RecyclerView.VERTICAL
       );*/
       articleAllList.setLayoutManager(layoutManager);
