@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.lottoecommrceapp.HomeActivity;
 import com.example.lottoecommrceapp.R;
+import com.facebook.shimmer.ShimmerFrameLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +31,7 @@ public class ArticleDetailsAdapter extends RecyclerView.Adapter<ArticleDetailsAd
     @NonNull
     List<ArticleDetails> lista = new ArrayList<>();
     Context context;
+    public boolean showShimmer = true;
     private onItemClickListener mListner;
 
 
@@ -62,20 +64,30 @@ public class ArticleDetailsAdapter extends RecyclerView.Adapter<ArticleDetailsAd
 
     @Override
     public void onBindViewHolder(@NonNull ArticleDetailsAdapter.ArticleDetailsHolder holder, int position) {
-
-       holder.articleText.setText(lista.get(position).getArticleSubtitle());
-       holder.articlePrice.setText(Integer.toString(lista.get(position).getStandardPrice()));
-        Glide.with(holder.cardImage.getContext()).load(ImgUrl+lista.get(position).getArticleMasterImage())
-                .fitCenter()
-                .into(holder.cardImage);
+        if(showShimmer){
+            holder.shimmerFrameLayout.startShimmer();
+        }else {
+            holder.shimmerFrameLayout.stopShimmer();
+            holder.shimmerFrameLayout.setShimmer(null);
+            holder.articleText.setBackground(null);
+            holder.articleText.setText(lista.get(position).getArticleSubtitle());
+            holder.articlePrice.setBackground(null);
+            holder.articlePrice.setText(Integer.toString(lista.get(position).getStandardPrice()));
+            holder.cardImage.setBackground(null);
+            Glide.with(holder.cardImage.getContext()).load(ImgUrl + lista.get(position).getArticleMasterImage())
+                    .fitCenter()
+                    .into(holder.cardImage);
+        }
     }
 
     @Override
     public int getItemCount() {
-        return lista.size();
+        int SHIMMER_ITEM_NUMBER = 10;
+        return showShimmer?SHIMMER_ITEM_NUMBER:lista.size();
     }
 
     public class ArticleDetailsHolder extends RecyclerView.ViewHolder {
+        ShimmerFrameLayout shimmerFrameLayout;
         ImageView cardImage;
         TextView articleText;
         TextView articlePrice;
@@ -84,7 +96,7 @@ public class ArticleDetailsAdapter extends RecyclerView.Adapter<ArticleDetailsAd
             cardImage = itemView.findViewById(R.id.article_image);
             articleText = itemView.findViewById(R.id.article_txt_id);
             articlePrice = itemView.findViewById(R.id.article_price_txt);
-
+            shimmerFrameLayout = itemView.findViewById(R.id.shimmer_view_container);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

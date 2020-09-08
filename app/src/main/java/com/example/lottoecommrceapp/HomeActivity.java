@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -44,6 +45,7 @@ import com.example.lottoecommrceapp.category.Category;
 import com.example.lottoecommrceapp.category.CategoryAdapter;
 import com.example.lottoecommrceapp.slider.SliderAdapter;
 import com.example.lottoecommrceapp.slider.SliderItem;
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.material.navigation.NavigationView;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -85,7 +87,7 @@ public class HomeActivity extends AppCompatActivity implements ArticleDetailsAda
 
     public ArrayList<ArticleDetails> lista=new ArrayList<ArticleDetails>();
     private List<ArticleDetails> articleDetailsList = new ArrayList<>();
-
+    ShimmerFrameLayout recycler;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -103,6 +105,8 @@ public class HomeActivity extends AppCompatActivity implements ArticleDetailsAda
         actionBarDrawerToggle.syncState();*/
        /* frameLayout = findViewById(R.id.main_frameLayout);
        setFragment(new HomeFragment());*/
+
+
 
         sliderView.setIndicatorAnimation(IndicatorAnimationType.WORM); //set indicator animation by using SliderLayout.IndicatorAnimations. :WORM or THIN_WORM or COLOR or DROP or FILL or NONE or SCALE or SCALE_DOWN or SLIDE and SWAP!!
         sliderView.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
@@ -144,8 +148,8 @@ public class HomeActivity extends AppCompatActivity implements ArticleDetailsAda
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(RecyclerView.HORIZONTAL);
         categoryListView.setLayoutManager(linearLayoutManager);
-        CategoryAdapter adapter = new CategoryAdapter(categoryList);
-        categoryListView.setAdapter(adapter);
+        CategoryAdapter cadapter = new CategoryAdapter(categoryList);
+        categoryListView.setAdapter(cadapter);
 
         // categoryList
         articleDetailsList = lista;
@@ -235,6 +239,7 @@ public boolean onOptionsItemSelected(MenuItem item){
     protected void onResume() {
         super.onResume();
         updateCartCount();
+
     }
 
     private void updateCartCount() {
@@ -252,21 +257,46 @@ public boolean onOptionsItemSelected(MenuItem item){
         });
 
     }
+  /* protected void onPause(){
+        super.onPause();
+        recycler.stopShimmer();
+        recycler.setVisibility(View.GONE);
+    }*/
 
-
-  public void  passData(ArticleDetails[] article){
+  public void  passData(final ArticleDetails[] article){
 
       for(int i =0;i<article.length;i++){
           lista.add(article[i]);
       }
+     /* if(lista.size()==0){
+       recycler.startShimmer();
+      }else{
+          recycler.stopShimmer();
+          recycler.setBackground(null);
+      }*/
       final RecyclerView articleAllList = findViewById(R.id.article_List);
       StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL);
      /* layoutManager.setOrientation(RecyclerView.VERTICAL
       );*/
-      articleAllList.setLayoutManager(layoutManager);
 
-      ArticleDetailsAdapter adapter = new ArticleDetailsAdapter(HomeActivity.this,articleDetailsList);
+
+         articleAllList.setLayoutManager(layoutManager);
+
+
+      articleAllList.setVisibility(View.VISIBLE);
+
+      final ArticleDetailsAdapter adapter = new ArticleDetailsAdapter(HomeActivity.this,articleDetailsList);
+
       articleAllList.setAdapter(adapter);
+      new Handler().postDelayed(new Runnable() {
+          @Override
+          public void run() {
+            article.toString();
+              adapter.showShimmer = false;
+              adapter.notifyDataSetChanged();
+
+          }
+      },3000);
       adapter.setOnItemClickListner(HomeActivity.this);
   }
 
