@@ -11,7 +11,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -23,8 +22,9 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
+
 import com.example.lottoecommrceapp.article.ArticleVariant;
-import com.example.lottoecommrceapp.article.ArticleVariantAdapter;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 

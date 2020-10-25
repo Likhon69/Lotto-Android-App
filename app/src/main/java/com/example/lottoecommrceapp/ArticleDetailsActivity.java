@@ -1,13 +1,10 @@
 package com.example.lottoecommrceapp;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
@@ -24,11 +21,11 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
+
 import com.example.lottoecommrceapp.addtocart.AddToCartDataSource;
 import com.example.lottoecommrceapp.addtocart.AddToCartDatabase;
 import com.example.lottoecommrceapp.addtocart.AddToCartModel;
@@ -36,7 +33,6 @@ import com.example.lottoecommrceapp.addtocart.AddToCartRepository;
 import com.example.lottoecommrceapp.addtocart.Common;
 import com.example.lottoecommrceapp.article.AddToCartData;
 import com.example.lottoecommrceapp.article.ArticleDetails;
-import com.example.lottoecommrceapp.article.ArticleDetailsAdapter;
 import com.example.lottoecommrceapp.article.ArticleImageAdapter;
 import com.example.lottoecommrceapp.article.ArticleImageModel;
 import com.example.lottoecommrceapp.article.ArticleSuggetionAdapter;
@@ -46,11 +42,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static com.example.lottoecommrceapp.article.ArticleDetailsAdapter.ARTICLE_DESCRIPTION;

@@ -1,6 +1,7 @@
 package com.example.lottoecommrceapp.article;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.lottoecommrceapp.HomeActivity;
+import com.example.lottoecommrceapp.ArticleDetailsActivity;
 import com.example.lottoecommrceapp.R;
 import com.facebook.shimmer.ShimmerFrameLayout;
 
@@ -29,7 +30,7 @@ public class ArticleDetailsAdapter extends RecyclerView.Adapter<ArticleDetailsAd
     public static String ARTICLE_DESCRIPTION = "description";
     private static final String ImgUrl = "http://192.168.5.27/Likhon/";
     @NonNull
-    List<ArticleDetails> lista = new ArrayList<>();
+    List<ArticleDetails> articleDetailsList = new ArrayList<>();
     Context context;
     public boolean showShimmer = true;
     private onItemClickListener mListner;
@@ -44,8 +45,8 @@ public class ArticleDetailsAdapter extends RecyclerView.Adapter<ArticleDetailsAd
 
 
 
-    public ArticleDetailsAdapter(@NonNull Context context,  List<ArticleDetails> lista) {
-        this.lista = lista;
+    public ArticleDetailsAdapter( List<ArticleDetails> articleDetailsList) {
+        this.articleDetailsList = articleDetailsList;
         this.context = context;
     }
 
@@ -64,26 +65,24 @@ public class ArticleDetailsAdapter extends RecyclerView.Adapter<ArticleDetailsAd
 
     @Override
     public void onBindViewHolder(@NonNull ArticleDetailsAdapter.ArticleDetailsHolder holder, int position) {
-        if(showShimmer){
-            holder.shimmerFrameLayout.startShimmer();
-        }else {
+
             holder.shimmerFrameLayout.stopShimmer();
             holder.shimmerFrameLayout.setShimmer(null);
             holder.articleText.setBackground(null);
-            holder.articleText.setText(lista.get(position).getArticleSubtitle());
+            holder.articleText.setText(articleDetailsList.get(position).getArticleSubtitle());
             holder.articlePrice.setBackground(null);
-            holder.articlePrice.setText(Integer.toString(lista.get(position).getStandardPrice()));
+            holder.articlePrice.setText(Integer.toString(articleDetailsList.get(position).getStandardPrice()));
             holder.cardImage.setBackground(null);
-            Glide.with(holder.cardImage.getContext()).load(ImgUrl + lista.get(position).getArticleMasterImage())
+            Glide.with(holder.cardImage.getContext()).load(ImgUrl + articleDetailsList.get(position).getArticleMasterImage())
                     .fitCenter()
                     .into(holder.cardImage);
-        }
+
     }
 
     @Override
     public int getItemCount() {
-        int SHIMMER_ITEM_NUMBER = 10;
-        return showShimmer?SHIMMER_ITEM_NUMBER:lista.size();
+
+        return articleDetailsList.size();
     }
 
     public class ArticleDetailsHolder extends RecyclerView.ViewHolder {
@@ -91,7 +90,7 @@ public class ArticleDetailsAdapter extends RecyclerView.Adapter<ArticleDetailsAd
         ImageView cardImage;
         TextView articleText;
         TextView articlePrice;
-        public ArticleDetailsHolder(@NonNull View itemView) {
+        public ArticleDetailsHolder(@NonNull final View itemView) {
             super(itemView);
             cardImage = itemView.findViewById(R.id.article_image);
             articleText = itemView.findViewById(R.id.article_txt_id);
@@ -100,12 +99,21 @@ public class ArticleDetailsAdapter extends RecyclerView.Adapter<ArticleDetailsAd
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(mListner!=null){
+
                         int position = getAdapterPosition();
                         if(position!=RecyclerView.NO_POSITION){
-                            mListner.onItemClick(position);
+                            Intent articleDetailsIntent = new Intent(itemView.getContext(), ArticleDetailsActivity.class);
+                            ArticleDetails checkedItem = articleDetailsList.get(position);
+                            articleDetailsIntent.putExtra(ARTICLE_NAME,checkedItem.getArticleTitle());
+                            articleDetailsIntent.putExtra(ARTICLE_PRICE,checkedItem.getStandardPrice());
+                            articleDetailsIntent.putExtra(ARTICLE_IMAGE_NAME,checkedItem.getArticleMasterImage());
+                            articleDetailsIntent.putExtra(ARTICLE_ID,checkedItem.getArticleId());
+                            articleDetailsIntent.putExtra(ARTICLE_DISCOUNT_RATE,checkedItem.getDiscountRate());
+                            articleDetailsIntent.putExtra(ARTICLE_DISCOUNT_PRICE,checkedItem.getDiscountPrice());
+                            articleDetailsIntent.putExtra(ARTICLE_DESCRIPTION,checkedItem.getDescription());
+                            itemView.getContext().startActivity(articleDetailsIntent);
                         }
-                    }
+
                 }
             });
         }

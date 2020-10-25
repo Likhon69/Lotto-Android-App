@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="#f8f9f8"
     android:orientation="vertical"
-    tools:context=".ArticleDetailsActivity">
+    tools:context="com.example.lottoecommrceapp.ArticleDetailsActivity">
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/image_viewPager"
@@ -25,7 +25,7 @@
            <LinearLayout
                android:layout_width="match_parent"
                android:layout_height="wrap_content"
-
+               android:layout_marginTop="5dp"
                android:background="#FFFFFF"
                android:orientation="vertical"
                >
@@ -217,6 +217,42 @@
 
                    android:textFontWeight="@integer/config_navAnimTime"/>
            </LinearLayout>
+           <LinearLayout
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:background="#FFFFFF"
+               android:layout_marginTop="5dp"
+               android:orientation="horizontal">
+               <com.google.android.material.button.MaterialButton
+                   android:layout_width="150dp"
+                   android:layout_height="wrap_content"
+                   android:id="@+id/order_id"
+                   android:text="Buy Now"
+                   android:textColor="#ffffff"
+                   android:layout_marginStart="35dp"
+                   android:background="@color/colorAccent"/>
+               <com.google.android.material.button.MaterialButton
+                   android:layout_width="150dp"
+                   android:layout_height="wrap_content"
+                   android:id="@+id/add_to_cart_id"
+                   android:text="Add to Cart"
+                   android:textColor="#ffffff"
+                   android:layout_marginStart="35dp"
+                   android:background="@color/colorAccent"/>
+           </LinearLayout>
+           <LinearLayout
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:background="#FFFFFF"
+               android:layout_marginTop="5dp"
+               android:orientation="horizontal">
+              <TextView
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_marginStart="5dp"
+                  android:text="Just for you:"
+                  android:textSize="20dp"/>
+           </LinearLayout>
 
            <LinearLayout
                android:layout_width="match_parent"
@@ -239,29 +275,6 @@
            </LinearLayout>
 
 
-       <LinearLayout
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-           android:background="#FFFFFF"
-           android:layout_marginTop="5dp"
-           android:orientation="horizontal">
-           <Button
-               android:layout_width="150dp"
-               android:layout_height="35dp"
-               android:id="@+id/order_id"
-               android:text="Buy Now"
-               android:textColor="#ffffff"
-               android:layout_marginStart="35dp"
-               android:background="@color/colorAccent"/>
-           <Button
-               android:layout_width="150dp"
-               android:layout_height="35dp"
-               android:id="@+id/add_to_cart_id"
-               android:text="Add to Cart"
-               android:textColor="#ffffff"
-               android:layout_marginStart="35dp"
-               android:background="@color/colorAccent"/>
-       </LinearLayout>
 
 
 

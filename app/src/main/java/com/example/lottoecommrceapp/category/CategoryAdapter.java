@@ -9,7 +9,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.lottoecommrceapp.CategoryModel;
 import com.example.lottoecommrceapp.R;
 
 import java.util.List;
